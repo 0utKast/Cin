@@ -8,11 +8,24 @@ void ignoreLine()
 
 double obtenerDouble()
 {
-    std::cout << "Escribe un valor double: ";
-    double x{};
-    std::cin >> x;
-    ignoreLine();
-    return x;
+    while (true) // Loop hasta que el usuario escriba una entrada válida
+    {
+        std::cout << "Escriba un valor double: ";
+        double x{};
+        std::cin >> x;
+
+        if (std::cin.fail()) // ¿tiene una extracción previa fallada?
+        {
+            // sí, manejamos el fallo
+            std::cin.clear(); // nos coloca de nuevo en un modo de operación 'normal'
+            ignoreLine(); // y eliminamos la entrada mala
+        }
+        else // en caso de que nuestra extracción haya sido correcta
+        {
+            ignoreLine();
+            return x; // así devolvemos el valor que haya sido extraído
+        }
+    }
 }
 
 char obtenerOperador()
